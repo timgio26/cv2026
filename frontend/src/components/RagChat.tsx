@@ -5,7 +5,7 @@ export function RagChat() {
   const [conv, setConv] = useState([
     {
       role: "agent",
-      msg: "Hello! I’m your AI assistant. Ask me anything about Timotius’ work,projects, or research.",
+      msg: "Hello! I’m your AI assistant. Ask me anything about Timotius.",
     },
   ]);
   const [question, setQuestion] = useState<string | undefined>("");
@@ -58,7 +58,7 @@ export function RagChat() {
       </div>
 
       {/* INPUT BAR */}
-      <div className="border-t border-white/10 p-4 flex items-center gap-3 bg-black/20">
+      <div className="border-t border-white/10 p-2 flex items-center gap-1 bg-black/20">
         <input
           value={question}
           onChange={(e) => {
@@ -66,7 +66,7 @@ export function RagChat() {
           }}
           type="text"
           placeholder="Type your message..."
-          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/20"
+          className="flex-1 min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/20"
         />
         <button
           className="px-4 py-2 bg-white/10 border border-white/10 rounded-xl text-gray-200 hover:bg-white/20 transition-all cursor-pointer"
