@@ -1,15 +1,11 @@
-from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv 
 import os
 
-load_dotenv()
+load_dotenv(override=True)
 
-llm = ChatOllama(
-    model="gemma4:31b-cloud",
-    base_url="https://ollama.com",
-    client_kwargs={
-        "headers": {
-            "Authorization": f"Bearer {os.getenv("OLLAMA_API_KEY")}"
-        }
-    }
+llm = ChatOpenAI(
+    model="openai/gpt-4.1",
+    api_key=os.getenv("GITHUB_TOKEN"),
+    base_url = "https://models.github.ai/inference"
 )
