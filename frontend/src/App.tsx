@@ -191,7 +191,7 @@ function App() {
         {/* MASTER DEGREE */}
         <div className="flex flex-col bg-white/5 border border-white/10 px-5 py-5 rounded-xl backdrop-blur-sm">
           <span className="text-xl font-medium">Business Informatics</span>
-          <span className="text-gray-400 text-sm">Master | 2024 - Current</span>
+          <span className="text-gray-400 text-sm">Master | GPA 4.58/5.00 | 2024 - 2026</span>
           <span className="text-gray-300 text-sm mb-3">
             University of Gdańsk, Poland
           </span>
