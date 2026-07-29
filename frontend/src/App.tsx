@@ -5,10 +5,11 @@ import linquizticImg from "./assets/linquiztic.png";
 import "./App.css";
 import { ProjectTile } from "./components/ProjectTile";
 import { Section } from "./components/Section";
-import { RagChat } from "./components/RagChat";
 import {ScrollHorizontalIndicator} from "./components/ScrollHorizontalIndicator"
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import profileImg from "./assets/profile.jpg"
+import { AISection } from "./components/AiSection";
+
 
 
 const myProjects = [
@@ -149,10 +150,7 @@ function App() {
 </div>
 
       </div>
-
-      <Section title="Chat With My AI Agent">
-        <RagChat />
-      </Section>
+      <AISection/>
 
       {/* EXPERIENCE SECTION */}
       <Section title="Experience">
@@ -336,6 +334,9 @@ function App() {
     */}
         </div>
       </div>
+
+
+      
     </div>
   );
 }
