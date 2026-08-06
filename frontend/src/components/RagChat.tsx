@@ -21,6 +21,9 @@ export function RagChat() {
         onSuccess: (data) => {
           setConv((prev) => [...prev, { role: "agent", msg: data }]);
         },
+        onError:()=>{
+          setConv((prev) => [...prev, { role: "agent", msg: "Sorry, agent not available right now. try again later" }]);
+        }
       },
     );
   }
