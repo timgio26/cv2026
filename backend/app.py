@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify,send_from_directory
-from tools.tools import get_answer_rag
+from tools.tools import llm_create_answer
 
 app = Flask(__name__,    
             static_folder="dist",
@@ -19,7 +19,7 @@ def ask():
         return jsonify({
             "error": "question is required"
         }), 400
-    answer = get_answer_rag(question)
+    answer = llm_create_answer(question)
     return jsonify({
         "question": question,
         "answer": answer
