@@ -1,156 +1,23 @@
-import bookgether from "./assets/bookgether.jpg";
-import openWheelImg from "./assets/openwheel.jpg";
-import cdpBeImg from "./assets/cdp.png";
-import linquizticImg from "./assets/linquiztic.png";
 import "./App.css";
-import { ProjectTile } from "./components/ProjectTile";
 import { Section } from "./components/Section";
-import {ScrollHorizontalIndicator} from "./components/ScrollHorizontalIndicator"
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
-import profileImg from "./assets/profile.jpg"
-import { AISection } from "./components/AiSection";
-
-
-
-const myProjects = [
-  {
-    title: "BookGether",
-    desc: "BookGether is book sharing platform. Our mission is to reduce paper utilization and production by encouraging the sharing of books, especially those that are often read just once.",
-    tools: ["TS", "Zustand", "Zod", "Tailwind", "Shadcn", "Supabase"],
-    img_src: bookgether,
-    url: [
-      {
-        url: "https://github.com/timgio26/bookgether",
-        icons: "github",
-      },
-      {
-        url: "https://bookgether.netlify.app/",
-        icons: "app",
-      },
-    ],
-  },
-  {
-    title: "OpenWheel",
-    desc: "ride-sharing application designed to connect people who have similar travel routes, enabling them to share a ride in a single vehicle",
-    tools: ["TS", "Redux", "Zod", "Tailwind", "Supabase"],
-    img_src: openWheelImg,
-    url: [
-      {
-        url: "https://github.com/timgio26/openwheel",
-        icons: "github",
-      },
-      {
-        url: "https://openwheel.netlify.app/",
-        icons: "app",
-      },
-    ],
-  },
-  {
-    title: "Customer Data Platform",
-    desc: "Tools to manage customer & historical services for indonesian water treatment company",
-    tools: ["Flask", "React", "MySQL","Tailwind"],
-    img_src: cdpBeImg,
-    url: [
-      {
-        url: "https://github.com/timgio26/cdp_toko",
-        icons: "github",
-      },
-      // {
-      //   url: "https://timgio26.pythonanywhere.com/",
-      //   icons: "app",
-      // },
-    ],
-  },
-  {
-    title: "Linquiztic (on progress)",
-    tools: ["React", "TS", "Tailwind", ".NET", "C#", "Firebase"],
-    desc: "Linquiztic is an fullstack app that allow user to learn new vocabulary & building sentence with the help of AI so every user has personalized journey",
-    url: [
-      { url: "https://github.com/timgio26/linquiztic_fe", icons: "github" },
-    ],
-    img_src: linquizticImg,
-  },
-];
+import { ScrollHorizontalIndicator } from "./components/ScrollHorizontalIndicator";
+import { HeroSection } from "./sections/HeroSection";
+import { lazy, Suspense } from "react";
 
 function App() {
+  const AISection = lazy(() => import("./components/AiSection"));
+  const ProjectSection = lazy(() => import("./sections/ProjectSection"));
   // const [count, setCount] = useState(0)
 
   return (
     <div className="min-h-screen w-full bg-black text-white px-6 py-16 flex flex-col gap-10">
-      <ScrollHorizontalIndicator/>
+      <ScrollHorizontalIndicator />
       {/* HERO SECTION */}
-      <div className="flex flex-col items-center gap-6">
-        <div className="flex flex-col items-center">
-          <span className="text-gray-400 tracking-widest uppercase text-sm">
-            hello I'm
-          </span>
-          <span className="text-5xl md:text-6xl font-extrabold tracking-tight text-center">
-            Timotius Giovandi
-          </span>
-        </div>
-  <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden border border-white/10 shadow-xl bg-white/5 backdrop-blur-sm">
-    <img
-      src={profileImg}
-      alt="Profile"
-      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-    />
-  </div>
-
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-lg  text-gray-300">
-            Data & Technology Enthusiast
-          </span>
-          <p className="max-w-2xl text-center text-gray-300">
-  Building AI applications, data solutions, and software systems
-  that turn ideas into real products.
-</p>
-        </div>
-
-<div className="flex flex-row gap-3 mt-4">
-<a
-  href="/Giovandi_CV.pdf"
-  download
-  className="px-6 py-2 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition-all inline-block cursor-pointer"
->
-  Download CV
-</a>
-
-
-<a
-  href="mailto:timotiusgiovandi@gmail.com"
-  className="px-6 py-2 rounded-lg border border-white/30 text-white hover:bg-white/10 transition-all inline-block cursor-pointer"
->
-  Contact Me
-</a>
-
-</div>
-
-
-<div className="flex items-center gap-4 mt-4">
-  <a
-    href="https://github.com/timgio26"
-    className="text-gray-400 hover:text-white transition-colors"
-  >
-    <FaGithub size={22} />
-  </a>
-
-  <a
-    href="https://www.linkedin.com/in/timgio/"
-    className="text-gray-400 hover:text-white transition-colors"
-  >
-    <FaLinkedin size={22} />
-  </a>
-
-  <a
-    href="https://www.instagram.com/timotiusgiovandi/"
-    className="text-gray-400 hover:text-white transition-colors"
-  >
-    <FaInstagram size={22} />
-  </a>
-</div>
-
-      </div>
-      <AISection/>
+      <HeroSection />
+      <Suspense fallback={<div className="w-[90%] lg:w-[50%] max-w-3xl mx-auto flex flex-col gap-6">Loading AI...</div>}>
+        <AISection />
+      </Suspense>
+      {/* <AISection /> */}
 
       {/* EXPERIENCE SECTION */}
       <Section title="Experience">
@@ -189,7 +56,9 @@ function App() {
         {/* MASTER DEGREE */}
         <div className="flex flex-col bg-white/5 border border-white/10 px-5 py-5 rounded-xl backdrop-blur-sm">
           <span className="text-xl font-medium">Business Informatics</span>
-          <span className="text-gray-400 text-sm">Master | GPA 4.58/5.00 | 2024 - 2026</span>
+          <span className="text-gray-400 text-sm">
+            Master | GPA 4.58/5.00 | 2024 - 2026
+          </span>
           <span className="text-gray-300 text-sm mb-3">
             University of Gdańsk, Poland
           </span>
@@ -254,17 +123,9 @@ function App() {
           </div>
         </div>
       </div>
-
-      <div className="w-[90%] lg:w-[50%] max-w-3xl mx-auto flex flex-col gap-6">
-        <span className="text-2xl font-semibold tracking-wide border-b border-white/10 pb-2">
-          Projects
-        </span>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {myProjects.map((each, index) => (
-            <ProjectTile data={each} key={index} />
-          ))}
-        </div>
-      </div>
+      <Suspense fallback={<div className="w-[90%] lg:w-[50%] max-w-3xl mx-auto flex flex-col gap-6">Loading Projects...</div>}>
+      <ProjectSection/>
+      </Suspense>
 
       <div className="w-[90%] lg:w-[50%] max-w-3xl mx-auto flex flex-col gap-6">
         <span className="text-2xl font-semibold tracking-wide border-b border-white/10 pb-2">
@@ -334,9 +195,6 @@ function App() {
     */}
         </div>
       </div>
-
-
-      
     </div>
   );
 }

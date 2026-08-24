@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useGetRagAnswer } from "../utils/Queries";
+import Markdown from 'react-markdown'
 
 export function RagChat() {
   const [conv, setConv] = useState([
@@ -12,7 +13,7 @@ export function RagChat() {
   const { mutate: sendQuestion, isPending } = useGetRagAnswer();
 
   function handleSend() {
-    if (!question?.trim()) return;
+    if (!question?.trim() || isPending) return;
     setConv((prev) => [...prev, { role: "user", msg: question }]);
     setQuestion("");
     sendQuestion(
@@ -37,7 +38,10 @@ export function RagChat() {
             return (
               <div className="flex" key={index}>
                 <div className="max-w-[80%] bg-white/10 border border-white/10 px-4 py-3 rounded-xl text-gray-200">
-                  {each.msg}
+                  <Markdown>
+                    {each.msg}
+                    
+                    </Markdown>
                 </div>
               </div>
             );
@@ -66,6 +70,11 @@ export function RagChat() {
           value={question}
           onChange={(e) => {
             setQuestion(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !isPending) {
+              handleSend();
+            }
           }}
           type="text"
           placeholder="Type your message..."

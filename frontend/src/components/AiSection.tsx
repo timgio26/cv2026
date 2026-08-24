@@ -3,7 +3,7 @@ import {Section} from "./Section"
 import {RagChat} from "./RagChat"
 import { Graph } from "./Graph";
 
-export function AISection() {
+export default function AISection() {
   const [showGraph, setShowGraph] = useState(false);
 
   return (
