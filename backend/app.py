@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify,send_from_directory
 from rag.tools import ingest
-from tools.tools import llm_create_answer
+from tools.tools import llm_create_answer_from_doc
 import argparse
 
 app = Flask(__name__,    
@@ -21,7 +21,7 @@ def ask():
         return jsonify({
             "error": "question is required"
         }), 400
-    answer = llm_create_answer(question)
+    answer = llm_create_answer_from_doc(question)
     return jsonify({
         "question": question,
         "answer": answer
@@ -41,6 +41,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.ingest:
+        print("ingesting")
         ingest()
+        print("done")
     else:
         app.run(debug=True)

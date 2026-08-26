@@ -1,7 +1,7 @@
 from requests import get
 import re
 from html import unescape
-from .raglite_ingest import load_documents,chunk_text,build_index
+from .raglite_ingest import load_documents,chunk_documents,build_index_from_list_of_document
 import pickle
 
 def get_url_content(url:str)->str:
@@ -22,14 +22,11 @@ def get_url_content(url:str)->str:
 
     return text
 
-
 def ingest():
     raw_documents = load_documents("data")
-    chunks = []
-    for doc in raw_documents:
-        chunks.extend(chunk_text(doc))
+    chunks = chunk_documents(raw_documents)
 
     # Build FAISS index from chunks
-    build_index(chunks)
-    with open("chunks.pkl", "wb") as f:
+    build_index_from_list_of_document(chunks)
+    with open("rag/chunks_new.pkl", "wb") as f:
         pickle.dump(chunks, f)
