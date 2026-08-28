@@ -3,18 +3,17 @@ import pickle,faiss
 from rag.raglite_retrieve import search_index
 
 
-def search(question:str):
+def search(question:str,score_threshold=1):
     index = faiss.read_index("rag/index_new.faiss")
 
     with open("rag/chunks_new.pkl", "rb") as f:
         chunks = pickle.load(f)
-    answer = search_index(question=question,index=index,documents=chunks)
+    answer = search_index(question=question,index=index,documents=chunks,score_threshold=score_threshold)
     return answer
 
 def llm_create_answer(question:str):
 
     answers = search(question=question)
-    print(answers)
     context = "\n".join(i for i in answers)
 
     response = llm.invoke(f"""
@@ -33,11 +32,21 @@ def llm_create_answer(question:str):
 
 def llm_create_answer_from_doc(question: str) -> str:
 
-    answers = search(question=question)
+    answers = search(question=question,score_threshold=2)
+
+    for answer in answers:
+        doc = answer["document"]
+
+        print(
+            f"score={answer['score']:.4f} "
+            f"page={doc.metadata.get('page')} "
+            f"chars={len(doc.page_content)}"
+        )
+
 
     context = "\n".join(
-        document.page_content
-        for document in answers
+        answer['document'].page_content
+        for answer in answers
     )
 
     response = llm.invoke(f"""
@@ -52,18 +61,6 @@ INSTRUCTIONS:
 - Do not mention the context or retrieval process.
 - Keep the answer concise.
 
-Rules:
-
-1. Prefer information supported by the retrieved documents.
-2. Do not fabricate facts.
-3. If documents conflict, acknowledge the uncertainty.
-4. If the retrieved information is irrelevant, do not force it
-   into the answer.
-5. Answer only what the user asked.
-6. Keep the response concise.
-7. Do not mention internal retrieval, documents, context,
-   embeddings, or the RAG system.
-
 CONTEXT:
 {context}
 
@@ -72,6 +69,7 @@ QUESTION:
 
 ANSWER:
     """)
+    print(response)
 
     return response.content
 
